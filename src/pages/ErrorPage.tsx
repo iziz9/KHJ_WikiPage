@@ -1,8 +1,12 @@
-import React from 'react'
+import InnerLayout from '../components/style/InnerLayout'
 
 const ErrorPage = () => {
   return (
-    <div>ErrorPage</div>
+    <main>
+      <InnerLayout>
+        <div>!</div>
+      </InnerLayout>
+    </main>
   )
 }
 

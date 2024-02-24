@@ -4,7 +4,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        mint: '#67d0c3',
+        main: '#196FEF',
+        highlight: '#67d0c3',
+        lightgray: '#D9D9D9'
       },
       screens: {
         xs: '400px',
