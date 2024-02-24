@@ -25,3 +25,12 @@ main {
   max-width: 834px;
   margin: 16px auto;
 }
+
+input,
+textarea:focus {
+  outline: none;
+}
+
+textarea {
+  resize: none;
+}

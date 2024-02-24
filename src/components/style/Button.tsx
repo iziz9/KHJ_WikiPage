@@ -1,9 +1,4 @@
-import React from 'react'
-
-type ButtonPropsType = {
-  onClick: () => void
-  children: React.ReactNode
-}
+import { ButtonPropsType } from '../../types/types'
 
 const Button = ({ onClick, children }: ButtonPropsType) => {
   return (
