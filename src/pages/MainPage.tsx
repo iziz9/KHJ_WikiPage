@@ -22,7 +22,6 @@ const MainPage = () => {
     const requestGetWikiList = async () => {
       try {
         const wikiRes = await getWikiList()
-        if (wikiRes.status !== 200) return
         console.log(wikiRes)
         setTotalWikiList(wikiRes.result)
       } catch (err) {
@@ -33,9 +32,11 @@ const MainPage = () => {
   }, [])
 
   useEffect(() => {
-    setCurrentWikiList(
-      totalWikiList.slice(page * LIMIT_CONTENT - LIMIT_CONTENT, page * LIMIT_CONTENT),
-    )
+    if (totalWikiList.length) {
+      setCurrentWikiList(
+        totalWikiList.slice(page * LIMIT_CONTENT - LIMIT_CONTENT, page * LIMIT_CONTENT),
+      )
+    }
   }, [page, totalWikiList])
 
   return (
@@ -44,14 +45,20 @@ const MainPage = () => {
         <PageTitle>위키 리스트</PageTitle>
         <Button onClick={() => goToWritePage()}>추가</Button>
       </TitleLayout>
-      <InnerLayout>
-        <ul className="flex flex-col gap-4">
-          {currentWikiList.map((wiki) => (
-            <WikiItem wiki={wiki} key={wiki.wikiId} />
-          ))}
-        </ul>
-      </InnerLayout>
-      <Pagination page={page} setPage={setPage} totalContent={totalWikiList.length} />
+      {currentWikiList.length ? (
+        <>
+          <InnerLayout>
+            <ul className="flex flex-col gap-4">
+              {currentWikiList.map((wiki) => (
+                <WikiItem wiki={wiki} key={wiki.wikiId} />
+              ))}
+            </ul>
+          </InnerLayout>
+          <Pagination page={page} setPage={setPage} totalContent={totalWikiList.length} />
+        </>
+      ) : (
+        <InnerLayout>작성된 위키가 없습니다.</InnerLayout>
+      )}
     </main>
   )
 }
