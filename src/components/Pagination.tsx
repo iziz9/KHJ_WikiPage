@@ -39,14 +39,24 @@ const Pagination = ({ page, setPage, totalContent }: PaginationPropsType) => {
   }, [page])
 
   return (
-    <nav className="my-4 flex gap-5 justify-center">
-      <button onClick={() => setPage(page - 1)} disabled={page === 1} aria-label="이전 페이지로">
+    <nav className="my-4 flex gap-5 justify-center text-gray-500">
+      <button
+        onClick={() => setPage(page - 1)}
+        disabled={page === 1}
+        aria-label="이전 페이지로"
+        className="hover:text-main cursor-pointer"
+      >
         <PrevIcon />
       </button>
       <ol className="flex justify-center gap-4 text-lg" aria-label="페이지">
         {currentPageGroup?.map((i) => (
           <li key={i + 1} onClick={() => setPage(i + 1)} className="cursor-pointer hover:text-main">
-            <button aria-current={page === i + 1 ? 'page' : undefined}>{i + 1}</button>
+            <button
+              aria-current={page === i + 1 ? 'page' : undefined}
+              className={page === i + 1 ? 'text-main font-semibold' : ''}
+            >
+              {i + 1}
+            </button>
           </li>
         ))}
       </ol>
@@ -54,6 +64,7 @@ const Pagination = ({ page, setPage, totalContent }: PaginationPropsType) => {
         onClick={() => setPage(page + 1)}
         disabled={page === totalPage}
         aria-label="다음 페이지로"
+        className="hover:text-main cursor-pointer"
       >
         <NextIcon />
       </button>
