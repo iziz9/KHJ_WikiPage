@@ -19,8 +19,11 @@ export const useWikiStore = create(
       },
       getWikiContent: (wikiId) => get().totalWikiList.find((wiki) => +wikiId === wiki.wikiId),
       editWiki: (editedWiki) => {
-        // 수정하고 다시 set
-        set(() => ({ totalWikiList: [...get().totalWikiList, editedWiki] }))
+        const editedList = get().totalWikiList.map((wiki) => {
+          if (wiki.wikiId === editedWiki.wikiId) return editedWiki
+          else return wiki
+        })
+        set(() => ({ totalWikiList: editedList }))
       },
     }),
     {

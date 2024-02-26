@@ -7,6 +7,7 @@ import { useWikiStore } from '../store/useWikiStore'
 import { useEffect, useState } from 'react'
 import { IWiki } from '../types/types'
 import { useAutoLink } from '../hooks/useAutoLink'
+import DOMPurify from 'dompurify'
 
 const WikiPage = () => {
   const { id } = useParams()
@@ -37,7 +38,10 @@ const WikiPage = () => {
         <Button onClick={() => goToEditPage()}>수정</Button>
       </TitleLayout>
       <InnerLayout>
-        <div dangerouslySetInnerHTML={{ __html: linkedContent }} className="min-h-60 my-5" />
+        <div
+          dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(linkedContent) }}
+          className="min-h-60 my-5"
+        />
       </InnerLayout>
     </main>
   )
