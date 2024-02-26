@@ -6,21 +6,29 @@ import TitleLayout from '../components/style/TitleLayout'
 import { useWikiStore } from '../store/useWikiStore'
 import { useEffect, useState } from 'react'
 import { IWiki } from '../types/types'
+import { useAutoLink } from '../hooks/useAutoLink'
 
 const WikiPage = () => {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { getWikiContent } = useWikiStore()
-  const [wikiContent, setWikiContent] = useState<IWiki>()
-
-  const goToEditPage = () => navigate('/edit/' + id)
+  const { totalWikiList, getWikiContent } = useWikiStore()
+  const { autoLink, linkedContent } = useAutoLink()
+  const [wikiContent, setWikiContent] = useState<IWiki>({ wikiId: 0, title: '', content: '' })
 
   useEffect(() => {
     if (id) {
       const wikiRes = getWikiContent(id)
-      setWikiContent(wikiRes)
+      wikiRes && setWikiContent(wikiRes)
     }
   }, [id, getWikiContent])
+
+  useEffect(() => {
+    if (totalWikiList.length && wikiContent) {
+      autoLink(totalWikiList, wikiContent.content)
+    }
+  }, [totalWikiList, wikiContent, autoLink])
+
+  const goToEditPage = () => navigate('/edit/' + id)
 
   return (
     <main>
@@ -29,7 +37,7 @@ const WikiPage = () => {
         <Button onClick={() => goToEditPage()}>수정</Button>
       </TitleLayout>
       <InnerLayout>
-        <div className=" min-h-60 my-5">{wikiContent?.content}</div>
+        <div dangerouslySetInnerHTML={{ __html: linkedContent }} className="min-h-60 my-5" />
       </InnerLayout>
     </main>
   )

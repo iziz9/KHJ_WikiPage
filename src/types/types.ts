@@ -20,7 +20,9 @@ export interface IWiki {
 }
 
 export interface IWikiStore {
-  cachedWikiList: IWiki[]
-  saveWikiList: (wikilist: IWiki[]) => void
-  modifyWikiList: (wikiId: IWiki) => void
+  totalWikiList: IWiki[]
+  setTotalWikiList: (wikiList: IWiki[]) => void
+  createNewWiki: (newWiki: IWiki) => void
+  getWikiContent: (wikiId: string) => IWiki | undefined
+  editWiki: (editedWiki: IWiki) => void
 }
