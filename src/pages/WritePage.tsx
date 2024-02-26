@@ -1,11 +1,24 @@
+import { useNavigate } from 'react-router-dom'
 import WriteBox from '../components/WriteBox'
 import InnerLayout from '../components/style/InnerLayout'
 import PageTitle from '../components/style/PageTitle'
-import { HandleSubmitType } from '../types/types'
+import { useWikiStore } from '../store/useWikiStore'
+import { ROUTE_PATH } from '../router/routePath'
+import { IWiki } from '../types/types'
 
 const WritePage = () => {
-  const handleSubmit = ({ titleValue, contentValue }: HandleSubmitType) => {
-    console.log(titleValue, contentValue)
+  const { totalWikiList, createNewWiki } = useWikiStore()
+  const navigate = useNavigate()
+
+  const handleSubmit = (newWiki: IWiki) => {
+    createNewWiki(newWiki)
+    try {
+      console.log(totalWikiList)
+      alert('위키 추가가 완료되었습니다.')
+      navigate(ROUTE_PATH.MAIN)
+    } catch (err) {
+      alert('위키 추가에 실패했습니다.')
+    }
   }
 
   return (

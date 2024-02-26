@@ -35,12 +35,9 @@ textarea {
   resize: none;
 }
 
-button[disabled] {
-  svg {
-    color: rgb(201, 201, 201);
-
-    &:hover {
-      cursor: default;
-    }
-  }
+button[disabled] svg {
+  color: rgb(201, 201, 201);
+}
+button[disabled] svg:hover {
+  cursor: default;
 }

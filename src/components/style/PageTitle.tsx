@@ -1,6 +1,6 @@
-import React from 'react'
+import { ReactNode } from 'react'
 
-const PageTitle = ({ children }: { children: React.ReactNode }) => {
+const PageTitle = ({ children }: { children: ReactNode }) => {
   return <h1 className="text-2xl font-semibold">{children}</h1>
 }
 

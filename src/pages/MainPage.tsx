@@ -10,26 +10,28 @@ import { useEffect, useState } from 'react'
 import { getWikiList } from '../api/request'
 import { IWiki } from '../types/types'
 import { LIMIT_CONTENT } from '../constants/defaultValues'
+import { useWikiStore } from '../store/useWikiStore'
 
 const MainPage = () => {
   const navigate = useNavigate()
   const goToWritePage = () => navigate(ROUTE_PATH.WRITE)
-  const [totalWikiList, setTotalWikiList] = useState<IWiki[]>([])
   const [currentWikiList, setCurrentWikiList] = useState<IWiki[]>([])
   const [page, setPage] = useState<number>(1)
+  const { totalWikiList, setTotalWikiList } = useWikiStore()
 
   useEffect(() => {
     const requestGetWikiList = async () => {
       try {
+        if (totalWikiList.length) return
+
         const wikiRes = await getWikiList()
-        console.log(wikiRes)
         setTotalWikiList(wikiRes.result)
       } catch (err) {
         console.error(err)
       }
     }
     requestGetWikiList()
-  }, [])
+  }, [setTotalWikiList, totalWikiList.length])
 
   useEffect(() => {
     if (totalWikiList.length) {

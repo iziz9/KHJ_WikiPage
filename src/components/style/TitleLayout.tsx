@@ -1,6 +1,6 @@
-import React from 'react'
+import { ReactNode } from 'react'
 
-const TitleLayout = ({ children }: { children: React.ReactNode }) => {
+const TitleLayout = ({ children }: { children: ReactNode }) => {
   return <div className="flex justify-between items-center">{children}</div>
 }
 

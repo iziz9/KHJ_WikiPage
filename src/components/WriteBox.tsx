@@ -1,17 +1,28 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { WriteBoxPropsType } from '../types/types'
 import Button from './style/Button'
+import { useWikiStore } from '../store/useWikiStore'
 
-const WriteBox = ({ handleSubmit }: WriteBoxPropsType) => {
+const WriteBox = ({ wikiContent, handleSubmit }: WriteBoxPropsType) => {
   const titleRef = useRef<HTMLInputElement>(null)
   const contentRef = useRef<HTMLTextAreaElement>(null)
+  const { totalWikiList } = useWikiStore()
+  const newWikiId = totalWikiList.length + 1
+
+  useEffect(() => {
+    if (wikiContent && titleRef.current && contentRef.current) {
+      titleRef.current.value = wikiContent.title
+      contentRef.current.value = wikiContent.content
+    }
+  }, [wikiContent])
 
   const formSubmitAction = () => {
-    const titleValue = titleRef?.current?.value
-    const contentValue = contentRef?.current?.value
-    if (titleValue && contentValue) {
-      handleSubmit({ titleValue, contentValue })
-    }
+    const title = titleRef?.current?.value
+    const content = contentRef?.current?.value
+
+    if (wikiContent && title && content) {
+      handleSubmit({ wikiId: wikiContent.wikiId, title, content })
+    } else if (title && content) handleSubmit({ wikiId: newWikiId, title, content })
   }
 
   return (
