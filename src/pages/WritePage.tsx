@@ -7,13 +7,12 @@ import { ROUTE_PATH } from '../router/routePath'
 import { IWiki } from '../types/types'
 
 const WritePage = () => {
-  const { totalWikiList, createNewWiki } = useWikiStore()
+  const { createNewWiki } = useWikiStore()
   const navigate = useNavigate()
 
   const handleSubmit = (newWiki: IWiki) => {
     createNewWiki(newWiki)
     try {
-      console.log(totalWikiList)
       alert('위키 추가가 완료되었습니다.')
       navigate(ROUTE_PATH.MAIN)
     } catch (err) {

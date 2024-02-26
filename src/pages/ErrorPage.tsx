@@ -4,7 +4,7 @@ const ErrorPage = () => {
   return (
     <main>
       <InnerLayout>
-        <div>!</div>
+        <div>Not Found</div>
       </InnerLayout>
     </main>
   )
